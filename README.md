@@ -6,10 +6,9 @@
 
 * To run this program, save `sticks.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 sticks.py`
 
-### Player vs Player
+### Player vs. Player
 
-Game of Sticks - Player vs Player is a game where two players can play against each other. The two examples
-below demonstrate how the game should behave.
+**Game of Sticks – Player vs. Player** is a game where two players can play against each other. The game starts by choosing the number of sticks that will be in play (10–100). Each player takes 1–3 sticks per round. The player who takes the last stick is the loser. The two examples below demonstrate how the game should behave.
 
 Example 1:
 

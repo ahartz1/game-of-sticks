@@ -24,11 +24,12 @@ def game_type():
     return game_type
 
 
-def player_name():
+def player_name(player):
     while True:
-        player = input("Please enter your name (or press Enter to be known as 'Player 1')\n> ")
+        player = input("Please enter your name (or press Enter to be known "
+                       "as 'Player {}')\n> ".format(player))
         if len(player) == 0:
-            return 'Player 1'
+            return 'Player {}'.format(player)
         elif len(player) < 25:
             for char in player:
                 if not char.isalnum():
@@ -38,6 +39,7 @@ def player_name():
         else:
             print('Player name must be letters and numbers, and less than 25 characters')
             continue
+
 
 def max_stick_choice(game_sticks):
     '''
@@ -91,10 +93,66 @@ def is_game_over(game_sticks):
         return False
 
 
-def main():
-    players = []
+def user_continue():
+    user_continue = ''
+    continue_bool = False
+    while True:
+        user_continue = input("Play again? [Y/n]: ").lower()
+        if user_continue == '' or user_continue == 'y':
+            continue_bool = True
+            break
+        elif user_continue == 'n':
+            continue_bool = False
+            print('\nGoodbye\n\n')
+            break
+        else:
+            continue
+    return continue_bool
 
-    pass
+
+def game_loop(player, game_sticks, game_mode):
+    count = 0           # Enables tracking of whose turn it is
+    play_again = False  # Signals whether player wants to continue playing
+
+    while True:
+        print(display_num_sticks(game_sticks))
+
+        player_move = get_stick_choice(player[count % 2])
+
+        game_sticks = new_stick_total(game_sticks, player_move)
+
+        if is_game_over(game_sticks):
+            print('\n{}, you lose.\n\n'.format(player[count % 2]))
+
+        play_again = user_continue()
+
+    return play_again, False
+
+
+def main():
+    players = []        # Holds player names and is the main structure for
+                        # determining whose turn it is (in conjunction with count)
+    game_sticks = 0
+
+    game_mode = None
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
