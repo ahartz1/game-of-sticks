@@ -1,6 +1,14 @@
 import random
 
 
+def game_type():
+    '''Asks user if they would like to play against
+        [1] Another player
+        [2] AI
+        [3] Trained AI
+    '''
+
+
 def max_stick_choice(game_sticks):
     '''
     Returns max number of sticks player can pick up
