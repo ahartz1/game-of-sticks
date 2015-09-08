@@ -16,16 +16,17 @@ def get_player_move(max_stick_choice, player):
     Gets player's choice of number of sticks to take
     '''
     #TODO prompt user to enter input
-    print('{}, how many sticks?')
+    print('{} sticks are available. {}, how many sticks will you take?'.format(
+          max_stick_choice, player))
 
 
 def ask_player_input(max_stick_choice):
-    pass:
+    pass
 
 
 def main():
     pass
 
 
-def __name__='__main__':
+if __name__ == '__main__':
     main()
