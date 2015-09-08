@@ -13,7 +13,7 @@ def game_type():
                           "(2) Learning AI without Training, or (3) Trained AI? ")
         try:
             game_type = int(game_type)
-            if game_type >=1 and game_type <=3
+            if 1 <= game_type <= 3:
                 break
             else:
                 print('Please choose the game type number (1, 2, or 3)')
@@ -48,16 +48,21 @@ def get_stick_choice(player, max_stick_choice, min_stick_choice=1):
                                 '({}-{}) ?'.format(min_stick_choice, max_stick_choice))
         try:
             player_move = int(player_move)
-            if player_move <= max_stick_choice and player_move >= min_stick_choice:
+            if min_stick_choice <= player_move <= max_stick_choice:
                 break
             else:
-                print('Invalid number of sticks selected, try again.')
+                print('Please enter a number between {} and {}.'.format(
+                      min_stick_choice, max_stick_choice))
                 continue
         except:
-            print('Invalid number of sticks selected, try again.')
+            print('Please enter a number between {} and {}.'.format(
+                  min_stick_choice, max_stick_choice))
             continue
     return player_move
 
+
+def display_num_sticks(game_sticks):
+    pass
 
 def main():
     players = []

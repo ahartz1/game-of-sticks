@@ -1,5 +1,5 @@
 import unittest
-from game_of_sticks import *
+from sticks import *
 
 # word_list = ["bird", "calf", "river", "stream", "kneecap",  "cookbook",
 #              "language", "sneaker", "algorithm", "integration", "brain"]
@@ -10,8 +10,13 @@ class TestGameofSticks(unittest.TestCase):
     def test_max_stick_choice_more(self):
         self.assertEqual(max_stick_choice(8), 3)
 
+
     def test_max_stick_choice_less(self):
         self.assertEqual(max_stick_choice(2), 2)
+
+
+    def test_display_num_sticks(self):
+        self.assertEqual(display_num_sticks(6), "There are 6 sticks on the board.")
 
 
     # def test_medium_words(self):
