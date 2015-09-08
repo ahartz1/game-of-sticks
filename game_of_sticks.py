@@ -11,17 +11,23 @@ def max_stick_choice(game_sticks):
     return max_stick_choice
 
 
-def get_player_move(max_stick_choice, player):
+def get_player_move(player, max_stick_choice, min_stick_choice=1):
     '''
     Gets player's choice of number of sticks to take
     '''
-    #TODO prompt user to enter input
-    print('{} sticks are available. {}, how many sticks will you take?'.format(
-          max_stick_choice, player))
-
-
-def ask_player_input(max_stick_choice):
-    pass
+    player_move = ''
+    while True:
+        player_move = input('{}: How many sticks do you take ({}-{})? $> '.format(
+                            player, min_stick_choice, max_stick_choice))
+        try:
+            player_move = int(player_move)
+            if player_move <= max_stick_choice and player_move >= min_stick_choice:
+                break
+            else:
+                continue
+        except:
+            continue
+        return player_move
 
 
 def main():
