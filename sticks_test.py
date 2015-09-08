@@ -19,6 +19,18 @@ class TestGameofSticks(unittest.TestCase):
         self.assertEqual(display_num_sticks(6), "There are 6 sticks on the board.")
 
 
+    def test_new_stick_total(self):
+        self.assertEqual(new_stick_total(6, 3), 3)
+
+
+    def is_game_over_true(self):
+        self.assertTrue(is_game_over(0))
+
+
+    def is_game_over_false(self):
+        self.assertFalse(is_game_over(6))
+
+
     # def test_medium_words(self):
     #     self.assertEqual(medium_words(word_list), ["stream", "kneecap", "cookbook", "language", "sneaker"])
     #

@@ -24,6 +24,21 @@ def game_type():
     return game_type
 
 
+def player_name():
+    while True:
+        player = input("Please enter your name (or press Enter to be known as 'Player 1')\n> ")
+        if len(player) == 0:
+            return 'Player 1'
+        elif len(player) < 25:
+            for char in player:
+                if not char.isalnum():
+                    print('Player name must be letters and numbers only, and less than 25 characters')
+                    continue
+            return player
+        else:
+            print('Player name must be letters and numbers, and less than 25 characters')
+            continue
+
 def max_stick_choice(game_sticks):
     '''
     Returns max number of sticks player can pick up
@@ -62,7 +77,19 @@ def get_stick_choice(player, max_stick_choice, min_stick_choice=1):
 
 
 def display_num_sticks(game_sticks):
-    pass
+    return 'There are {} sticks on the board.'.format(game_sticks)
+
+
+def new_stick_total(game_sticks, player_stick_choice):
+    return game_sticks - player_stick_choice
+
+
+def is_game_over(game_sticks):
+    if game_sticks <= 0:
+        return True
+    else:
+        return False
+
 
 def main():
     players = []
