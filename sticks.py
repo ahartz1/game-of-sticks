@@ -126,9 +126,12 @@ def generate_ai_beside(ai_dict, game_sticks):
 
 
 def ai_loses(ai_dict):
+    #TODO: if hats[key] has more than one beside[key], remove one beside[key] from hats[key]
     temp_dict = dict(ai_dict)
     for num_sticks, stick_dict in temp_dict.items():
         if len(str(stick_dict['beside'])) > 0:
+            if ai_dict[num_sticks]['beside'].count(ai_dict[num_sticks]['hat']) > 1:
+                ai_dict[num_sticks]['hat'].remove(ai_dict[num_sticks]['beside'])
             ai_dict[num_sticks]['beside'] = []
     return ai_dict
 
