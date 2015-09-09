@@ -219,7 +219,7 @@ def main():
                             # 3: Player vs. Trained AI
     play_again = False
     count = 0               # Tracks how many training rounds have occurred
-    training_rounds = 1000  # Number of training rounds for ai
+    training_rounds = 10000  # Number of training rounds for ai
     training_complete = False
     ai_player_1 = {}
     ai_player_2 = {}
@@ -241,6 +241,7 @@ def main():
                 players.append('Trained AI')
                 ai_player_1 = initialize_ai_dict()
                 ai_player_2 = initialize_ai_dict()
+                print('AI is doing pushups, please wait . . .')
                 for n in list(range(training_rounds)):
                     ai_player_1, ai_player_2 = training_loop(players, ai_player_1, ai_player_2)
                 training_complete = True
