@@ -23,14 +23,14 @@ class TestGameofSticks(unittest.TestCase):
         self.assertEqual(new_stick_total(6, 3), 3)
 
 
-    def is_game_over_true(self):
+    def test_is_game_over_true(self):
         self.assertTrue(is_game_over(0))
 
 
-    def is_game_over_false(self):
+    def test_is_game_over_false(self):
         self.assertFalse(is_game_over(6))
 
-    def ai_wins_test(self):
+    def test_ai_wins_test(self):
         self.assertEqual(ai_wins(ai_player_1), {4: {'hat': [1, 2, 3, 3], 'beside': []}})
 
 

@@ -55,3 +55,6 @@ There is 1 stick on the board.
 Player 1: How many sticks do you take (1-3)? 1
 Player 1, you lose.
 ```
+
+### Player vs. Learning AI without Training
+**Game of Sticks – Player vs. Learning AI without Training** introduces an AI that learns as it goes. The gameplay is the same as with two human players, but as the AI learns, it will eventually become very, very good.
