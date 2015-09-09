@@ -1,7 +1,7 @@
 import random
 
 
-def game_type():
+def get_game_mode():
     '''Asks user who they would like to play against and returns the corresponding
        number.
         [1] Another player
@@ -9,11 +9,11 @@ def game_type():
         [3] Trained AI
     '''
     while True:
-        game_type = input("Would you like to play against (1) Another Player, "
-                          "(2) Learning AI without Training, or (3) Trained AI? ")
+        game_mode = input("Select your desired game mode by number:\n  (1) Another Player,"
+                          "\n  (2) Learning AI without Training, or \n  (3) Trained AI?\n> ")
         try:
-            game_type = int(game_type)
-            if 1 <= game_type <= 3:
+            game_mode = int(game_mode)
+            if 1 <= game_mode <= 3:
                 break
             else:
                 print('Please choose the game type number (1, 2, or 3)')
@@ -21,15 +21,16 @@ def game_type():
         except:
             print('Please choose the game type by number (1, 2, or 3)')
             continue
-    return game_type
+    return game_mode
 
 
-def player_name(player):
+def player_name(player_num):
+    player = None
     while True:
         player = input("Please enter your name (or press Enter to be known "
-                       "as 'Player {}')\n> ".format(player))
+                       "as 'Player {}')\n> ".format(player_num))
         if len(player) == 0:
-            return 'Player {}'.format(player)
+            return 'Player {}'.format(player_num)
         elif len(player) < 25:
             for char in player:
                 if not char.isalnum():
@@ -41,17 +42,17 @@ def player_name(player):
             continue
 
 
-def max_stick_choice(game_sticks):
-    '''
-    Returns max number of sticks player can pick up
-    '''
-    max_stick_choice = 3
-    if game_sticks < 3:
-        max_stick_choice = game_sticks
-    return max_stick_choice
+# def max_stick_choice(game_sticks):
+#     '''
+#     Returns max number of sticks player can pick up
+#     '''
+#     max_stick_choice = 3
+#     if game_sticks < 3:
+#         max_stick_choice = game_sticks
+#     return max_stick_choice
 
 
-def get_stick_choice(player, max_stick_choice, min_stick_choice=1):
+def get_stick_choice(player, min_stick_choice=1, max_stick_choice=3):
     '''
     Gets player's choice of number of sticks to take
     '''
@@ -62,7 +63,7 @@ def get_stick_choice(player, max_stick_choice, min_stick_choice=1):
                                 player))
         else:
             player_move = input('How many sticks are there on the table initially '
-                                '({}-{}) ?'.format(min_stick_choice, max_stick_choice))
+                                '({}-{})?\n> '.format(min_stick_choice, max_stick_choice))
         try:
             player_move = int(player_move)
             if min_stick_choice <= player_move <= max_stick_choice:
@@ -123,36 +124,44 @@ def game_loop(player, game_sticks, game_mode):
 
         if is_game_over(game_sticks):
             print('\n{}, you lose.\n\n'.format(player[count % 2]))
+            break
+            # Potential spot to have return of win to AIs
+        count += 1
+    play_again = user_continue()
 
-        play_again = user_continue()
-
-    return play_again, False
+    return play_again
 
 
 def main():
-    players = []        # Holds player names and is the main structure for
-                        # determining whose turn it is (in conjunction with count)
-    game_sticks = 0
+    players = []            # Holds player names and is the main structure for
+                            # determining whose turn it is (in conjunction with count)
+    min_start_sticks = 10
+    max_start_sticks = 100
+    game_sticks = 0         # Tracks number of sticks as game progresses
+    game_mode = None        # 1: Player vs. Player, 2: Player vs. AI,
+                            # 3: Player vs. Trained AI
 
-    game_mode = None
+    print('Welcome to the Game of Sticks!')
 
-    
+    while True:
+        game_mode = get_game_mode()
 
+        if game_mode == 1:
+            players.append(player_name('1'))
+            players.append(player_name('2'))
+        elif game_mode == 2:
+            players.append(player_name('1'))
+            players.append('AI')
+        else:
+            players.append(player_name('1'))
+            players.append('Trained AI')
 
+        game_sticks = get_stick_choice(players[0], min_start_sticks, max_start_sticks)
 
+        play_again = game_loop(players, game_sticks, game_mode)
 
-
-
-
-
-
-
-
-
-
-
-
-
+        if not play_again:
+            break
 
 
 if __name__ == '__main__':
