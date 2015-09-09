@@ -119,22 +119,61 @@ def initialize_ai_dict():
 
 
 def generate_ai_beside(ai_dict, game_sticks):
-    return ai_dict[game_sticks]['beside'].append(random.randint(1,3))
+    ret = dict(ai_dict)
+    ret[game_sticks]['beside'].append(random.randint(1,3))
+    return ret[game_sticks]['beside'][0], ret
 
-def game_loop(player, game_sticks, game_mode):
+
+def ai_loses(ai_dict):
+    temp_dict = dict(ai_dict)
+    for num_sticks, stick_dict in temp_dict.items():
+        if len(stick_dict['beside']) > 0:
+            ai_dict[num_sticks]['hat'].append(ai_dict[num_sticks]['beside'])
+            ai_dict[num_sticks]['beside'] = []
+    return ai_dict
+
+
+def ai_wins(ai_dict):
+    temp_dict = dict(ai_dict)
+    for num_sticks, stick_dict in temp_dict.items():
+        if len(stick_dict['beside']) > 0:
+            ai_dict[num_sticks]['hat'].append(ai_dict[num_sticks]['beside'])
+            ai_dict[num_sticks]['hat'].append(ai_dict[num_sticks]['beside'])
+            ai_dict[num_sticks]['beside'] = []
+    return ai_dict
+
+
+def game_loop(players, game_sticks, game_mode):
     count = 0           # Enables tracking of whose turn it is
+    player_move = None  # Holds the current player's move
     play_again = False  # Signals whether player wants to continue playing
+    ai_player_1 = {}
+    ai_player_2 = {}
+
+    if game_mode >= 2:
+        ai_player_1 = initialize_ai_dict()
+    if game_mode == 3:
+        ai_player_2 = initialize_ai_dict()
 
     while True:
         print(display_num_sticks(game_sticks))
 
-        player_move = get_stick_choice(player[count % 2])
+        if count % 2 == 1:
+            player_move, ai_player_1 = generate_ai_beside(ai_player_1, game_sticks)
+            print('{}: How many sticks do you take (1-3)? {}'.format(players[count % 2], player_move))
+        elif count % 2 == 0 and game_mode == 3:
+            player_move, ai_player_2 = generate_ai_beside(ai_player_2, game_sticks)
+            print('{}: How many sticks do you take (1-3)? {}'.format(players[count % 2], player_move))
+        else:
+            player_move = get_stick_choice(players[count % 2])
 
         game_sticks = new_stick_total(game_sticks, player_move)
 
         if is_game_over(game_sticks):
-            print('\n{}, you lose.\n\n'.format(player[count % 2]))
+            print('\n{}, you lose.\n\n'.format(players[count % 2]))
             break
+        else:
+            print('\n')
             # Potential spot to have return of win to AIs
         count += 1
     play_again = user_continue()
