@@ -185,7 +185,7 @@ def game_loop(players, game_sticks, game_mode, ai_player_1):
     while True:
         print(display_num_sticks(game_sticks))
 
-        if count % 2 == 1:
+        if count % 2 == 1 and game_mode >= 2:
             player_move, ai_player_1 = generate_ai_beside(ai_player_1, game_sticks)
             print(ai_player_1[game_sticks]['hat'])
             print('{}: How many sticks do you take (1-3)? {}'.format(players[count % 2], player_move))
