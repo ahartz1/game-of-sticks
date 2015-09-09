@@ -121,7 +121,7 @@ def initialize_ai_dict():
 
 def generate_ai_beside(ai_dict, game_sticks):
     ret = dict(ai_dict)
-    ret[game_sticks]['beside'].append(random.randint(1,3))
+    ret[game_sticks]['beside'].append(random.choice(ret[game_sticks]['hat']))
     return ret[game_sticks]['beside'][0], ret
 
 
@@ -184,6 +184,7 @@ def game_loop(players, game_sticks, game_mode, ai_player_1):
 
         if count % 2 == 1:
             player_move, ai_player_1 = generate_ai_beside(ai_player_1, game_sticks)
+            print(ai_player_1[game_sticks]['hat'])
             print('{}: How many sticks do you take (1-3)? {}'.format(players[count % 2], player_move))
         else:
             player_move = get_stick_choice(players[count % 2])
