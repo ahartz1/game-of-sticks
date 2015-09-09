@@ -111,6 +111,16 @@ def user_continue():
     return continue_bool
 
 
+def initialize_ai_dict():
+    ret_dict = {}
+    for n in list(range(1,101)):
+        ret_dict[n] = {'hat': [1, 2, 3], 'beside': []}
+    return ret_dict
+
+
+def generate_ai_beside(ai_dict, game_sticks):
+    return ai_dict[game_sticks]['beside'].append(random.randint(1,3))
+
 def game_loop(player, game_sticks, game_mode):
     count = 0           # Enables tracking of whose turn it is
     play_again = False  # Signals whether player wants to continue playing
