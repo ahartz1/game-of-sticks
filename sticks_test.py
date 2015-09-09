@@ -3,16 +3,16 @@ from sticks import *
 
 # word_list = ["bird", "calf", "river", "stream", "kneecap",  "cookbook",
 #              "language", "sneaker", "algorithm", "integration", "brain"]
-
+ai_player_1 = {4: {'hat': [1, 2, 3], 'beside': [3]}}
 
 class TestGameofSticks(unittest.TestCase):
 
-    def test_max_stick_choice_more(self):
-        self.assertEqual(max_stick_choice(8), 3)
-
-
-    def test_max_stick_choice_less(self):
-        self.assertEqual(max_stick_choice(2), 2)
+    # def test_max_stick_choice_more(self):
+    #     self.assertEqual(max_stick_choice(8), 3)
+    #
+    #
+    # def test_max_stick_choice_less(self):
+    #     self.assertEqual(max_stick_choice(2), 2)
 
 
     def test_display_num_sticks(self):
@@ -29,6 +29,9 @@ class TestGameofSticks(unittest.TestCase):
 
     def is_game_over_false(self):
         self.assertFalse(is_game_over(6))
+
+    def ai_wins_test(self):
+        self.assertEqual(ai_wins(ai_player_1), {4: {'hat': [1, 2, 3, 3], 'beside': []}})
 
 
     # def test_medium_words(self):

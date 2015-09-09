@@ -76,6 +76,7 @@ def get_stick_choice(player, min_stick_choice=1, max_stick_choice=3):
             print('Please enter a number between {} and {}.'.format(
                   min_stick_choice, max_stick_choice))
             continue
+    print('')
     return player_move
 
 
@@ -127,20 +128,24 @@ def generate_ai_beside(ai_dict, game_sticks):
 def ai_loses(ai_dict):
     temp_dict = dict(ai_dict)
     for num_sticks, stick_dict in temp_dict.items():
-        if len(stick_dict['beside']) > 0:
-            ai_dict[num_sticks]['hat'].append(ai_dict[num_sticks]['beside'])
+        if len(str(stick_dict['beside'])) > 0:
             ai_dict[num_sticks]['beside'] = []
     return ai_dict
 
 
 def ai_wins(ai_dict):
-    temp_dict = dict(ai_dict)
-    for num_sticks, stick_dict in temp_dict.items():
-        if len(stick_dict['beside']) > 0:
-            ai_dict[num_sticks]['hat'].append(ai_dict[num_sticks]['beside'])
-            ai_dict[num_sticks]['hat'].append(ai_dict[num_sticks]['beside'])
-            ai_dict[num_sticks]['beside'] = []
+    for num_sticks, stick_dict in ai_dict.items():
+        if len(str(stick_dict['beside'])) > 0:
+            stick_dict['hat'].extend(stick_dict['beside'])
+            stick_dict['beside'] = []
     return ai_dict
+    # temp_dict = dict(ai_dict)
+    # for num_sticks, stick_dict in temp_dict.items():
+    #     if len(stick_dict['beside']) > 0:
+    #         ai_dict[num_sticks]['hat'].extend(ai_dict[num_sticks]['beside'])
+    #         ai_dict[num_sticks]['hat'].extend(ai_dict[num_sticks]['beside'])
+    #         ai_dict[num_sticks]['beside'] = []
+    # return ai_dict
 
 
 def game_loop(players, game_sticks, game_mode):
@@ -171,10 +176,18 @@ def game_loop(players, game_sticks, game_mode):
 
         if is_game_over(game_sticks):
             print('\n{}, you lose.\n\n'.format(players[count % 2]))
+            if game_mode >= 2:
+                if count % 2 == 1:
+                    ai_loses(ai_player_1)
+                else:
+                    ai_wins(ai_player_1)
+            if game_mode == 3:
+                if count % 2 == 0:
+                    ai_loses(ai_player_2)
+                else:
+                    ai_wins(ai_player_2)
             break
-        else:
-            print('\n')
-            # Potential spot to have return of win to AIs
+        print('')
         count += 1
     play_again = user_continue()
 
@@ -189,21 +202,25 @@ def main():
     game_sticks = 0         # Tracks number of sticks as game progresses
     game_mode = None        # 1: Player vs. Player, 2: Player vs. AI,
                             # 3: Player vs. Trained AI
+    play_again = False
+    count = 0               # Tracks how many training rounds have occurred
+    training_rounds = 1000  # Number of training rounds for ai
 
     print('Welcome to the Game of Sticks!')
 
     while True:
-        game_mode = get_game_mode()
-
-        if game_mode == 1:
-            players.append(player_name('1'))
-            players.append(player_name('2'))
-        elif game_mode == 2:
-            players.append(player_name('1'))
-            players.append('AI')
-        else:
-            players.append(player_name('1'))
-            players.append('Trained AI')
+        if not play_again:
+            game_mode = get_game_mode()
+            if game_mode == 1:
+                players.append(player_name('1'))
+                players.append(player_name('2'))
+            elif game_mode == 2:
+                players.append(player_name('1'))
+                players.append('AI')
+            else:
+                players.append(player_name('1'))
+                players.append('Trained AI')
+                # train_ai (suppress output)
 
         game_sticks = get_stick_choice(players[0], min_start_sticks, max_start_sticks)
 
@@ -211,6 +228,7 @@ def main():
 
         if not play_again:
             break
+
 
 
 if __name__ == '__main__':
