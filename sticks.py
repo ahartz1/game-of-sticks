@@ -148,10 +148,9 @@ def ai_wins(ai_dict):
     # return ai_dict
 
 
-def training_loop(players, ai_player_1, ai_player_2, game_sticks=100, game_mode=3):
+def training_loop(players, ai_player_1, ai_player_2, game_sticks=100):
     count = 0           # Enables tracking of whose turn it is
     player_move = None  # Holds the current player's move
-    play_again = False  # Signals whether player wants to continue playing
 
     while True:
         if count % 2 == 1:
@@ -198,10 +197,11 @@ def game_loop(players, game_sticks, game_mode, ai_player_1):
                     ai_loses(ai_player_1)
                 else:
                     ai_wins(ai_player_1)
+            break
         print('')
         count += 1
-    play_again = user_continue()
 
+    play_again = user_continue()
     return play_again
 
 
@@ -216,6 +216,7 @@ def main():
     play_again = False
     count = 0               # Tracks how many training rounds have occurred
     training_rounds = 1000  # Number of training rounds for ai
+    training_complete = False
     ai_player_1 = {}
     ai_player_2 = {}
 
@@ -231,18 +232,21 @@ def main():
                 players.append(player_name('1'))
                 players.append('AI')
                 ai_player_1 = initialize_ai_dict()
-            if game_mode == 3:
+            if game_mode == 3 and training_complete == False:
                 players.append(player_name('1'))
                 players.append('Trained AI')
+                ai_player_1 = initialize_ai_dict()
                 ai_player_2 = initialize_ai_dict()
-                for _ in range(training_rounds):
+                for n in list(range(training_rounds)):
                     ai_player_1, ai_player_2 = training_loop(players, ai_player_1, ai_player_2)
+                training_complete = True
+                print('AI Training Complete.')
 
         game_sticks = get_stick_choice(players[0], min_start_sticks, max_start_sticks)
 
-        for key, value in ai_player_1.items():
-            if key < 10:
-                print(key, value)
+        # for key, value in ai_player_1.items():
+        #     if key < 10:
+        #         print(key, value)
         play_again = game_loop(players, game_sticks, game_mode, ai_player_1)
 
         if not play_again:
